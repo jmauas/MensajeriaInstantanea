@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./media/favicon.ico">
+    <title>Chat</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+    <div class="encabezado">
+        <div class="container m-1">
+            <h5 id="titulo">Chat</h5>
+            <span id="status"></span>
+            <div class="row mb-3 align-items-center" id="idUsuario">
+                <div class="col-xs-12 col-md-3">
+                    <label for="usuario" class="form-label bold">Ingrese Usuario: </label>
+                </div>
+                <div class="col-xs-6 col-md-6">
+                    <input type="text" class="form-control m-2 bold" id="usuario">
+                </div>
+                <div class="col-xs-4 col-md-2">
+                    <button class="btn btn-info m-1" onclick="regUsuario()"><i class="bi bi-person-check-fill"></i> Ingresar</button>
+                </div>
+            </div>
+            <div class="row mb-3 align-items-center">
+                <div class="col-2 col-md-2">
+                    <label for="mensaje" class="form-label">Mensaje: </label>
+                </div>
+                <div class="col-10 col-md-10">
+                    <textarea class="form-control m-2" id="mensaje"></textarea>
+                </div>
+            </div>
+            <div class="row mb-3 align-items-center">
+                <div class="col-4 col-sm-3 col-md-2 col-lg-2 col-xl-1">
+                    <div class="form-check form-switch align-items-center">
+                        <input class="form-check-input" type="checkbox" id="sonido" checked>
+                        <label class="form-check-label" for="sonido">Notificar</label>
+                    </div>    
+                    <div class="form-check form-switch align-items-center">
+                        <input class="form-check-input" type="checkbox" id="sinLeer" onchange="pedirMsgs()" checked>
+                        <label class="form-check-label" for="sinLeer">Nuevos</label>
+                    </div>                                        
+                </div>
+                <div class="col-8 col-sm-6 col-md-4 col-lg-2">
+                    <button class="btn btn-success m-1 ms-3" onclick="enviar()"><i class="bi bi-send"></i> Enviar Mensaje</button>
+                </div>
+                <div class="col-12 col-sm-10 col-md-8 col-lg-5 col-xl-6">
+                    <div id="alertType">
+                        <div class="alert alert-warning" role="alert">
+                            <i class="bi bi-exclamation-triangle-fill"></i>
+                            <span id="textoAlertType" class="ms-2"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-sm-5 col-md-4 col-lg-2">
+                    <div class="input" id="etiquetaFile">
+                        <input class="m-1" type="file" name="etiquetaFile" id="myFile" multiple>
+                    </div>
+                </div>
+                <div class="col-4 col-sm-3 col-md-2 col-lg-1">
+                    <button type="button" class="btn btn-warning" onclick="verConectados()"><i class="bi bi-wifi"></i></button>
+                </div>
+            </div>
+            <button class="btn btn-danger m-1" id="activar" onclick="activarSonido()"><i class="bi bi-speaker-fill"></i> CLICK PARA ACTIVAR SONIDO</button>
+        </div>
+       
+    </div>
+    <div class="cuerpo">
+        <div class="container ml-5">
+            <div id="msgs"></ul>
+        </div>
+    </div>
+     <!-- Modal -->
+     <div class="modal fade" id="conectados" tabindex="-1" aria-labelledby="conectadosLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Usuarios Conectados</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-xs table-striped">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Desde</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaConectados">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="/auxi/soundmanager2.js"></script>
+    <script src="/app.js"></script>
+</body>
+</html>
